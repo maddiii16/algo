@@ -63,40 +63,55 @@ compression_station add_cs() {
     return new_cs;
 }
 
-void view_pipe(const pipe& pipe, bool exists) {
-    if (!exists) {
+void view_pipe(pipe new_pipe) {
+    if (new_pipe.name == "") {
         cout << "Error! No pipe has been added yet." << endl;
-        return;
     }
-    cout << "Pipe Information" << endl;
-    cout << "Name: " << pipe.name << endl;
-    cout << "Length: " << pipe.length << endl;
-    cout << "Diameter: " << pipe.diameter << endl;
-    cout << "Status: " << (pipe.repair ? "In repair" : "Not in repair") << endl;
-    cout << "" << endl;
+    else {
+        cout << "Pipe Information" << endl;
+        cout << "Name: " << new_pipe.name << endl;
+        cout << "Length: " << new_pipe.length << endl;
+        cout << "Diameter: " << new_pipe.diameter << endl;
+        cout << "Status: " << (new_pipe.repair ? "In repair" : "Not in repair") << endl;
+        cout << "" << endl;
+    }
 }
 
-void view_compression_station(const compression_station & cs, bool exists) {
-    if (!exists) {
+void view_cs(compression_station new_cs) {
+    if (new_cs.name == "") {
         cout << "Error! No compression station has been added yet." << endl;
-        return;
     }
-    cout << "Compression Station Information" << endl;
-    cout << "Name: " << cs.name << endl;
-    cout << "Total workshops: " << cs.shopsnumber << endl;
-    cout << "Workshops in operation: " << cs.workinshopnumber << endl;
-    cout << "Efficiency factor: " << cs.effectiveness << "%" << endl;
+    else {
+        cout << "Compression Station Information" << endl;
+        cout << "Name: " << new_cs.name << endl;
+        cout << "Total workshops: " << new_cs.shopsnumber << endl;
+        cout << "Workshops in operation: " << new_cs.workinshopnumber << endl;
+        cout << "Efficiency factor: " << new_cs.effectiveness << "%" << endl;
+    }
 }
 
-void edit_pipe(pipe& pipe, bool exists) {
-    if (!exists) {
+void edit_pipe(pipe new_pipe) {
+    if (new_pipe.name == "") {
         cout << "Error! No pipe has been added yet." << endl;
-        return;
     }
-    cout << "Current repair status: " << (pipe.repair ? "In repair" : "Not in repair") << endl;
-    cout << "Enter the new repair status (0 = not in repair, 1 = in repair): ";
-    pipe.repair = checking_number(0, 1);
-    cout << "The repair status has been updated to: " << (pipe.repair ? "In repair" : "Not in repair") << endl;
+    else {
+        cout << "Current repair status: " << (new_pipe.repair ? "In repair" : "Not in repair") << endl;
+        cout << "Enter the new repair status (0 = not in repair, 1 = in repair): ";
+        new_pipe.repair = checking_number(0, 1);
+        cout << "The repair status has been updated to: " << (new_pipe.repair ? "In repair" : "Not in repair") << endl;
+    }
+}
+
+void edit_cs_work(compression_station new_cs) {
+    if (new_cs.name == "") {
+        cout << "Error! No compression station has been added yet." << endl;
+    }
+    else {
+        cout << "The current state of the CS operation: number of workshops - " << (new_cs.shopsnumber) << ", number of workshops in operation - " << (new_cs.workinshopnumber) << endl;
+        cout << "Enter a new number of workshops in operation): ";
+        new_cs.workinshopnumber = checking_number(0, new_cs.shopsnumber);
+        cout << "The job status has been updated to: number of workshops - " << (new_cs.shopsnumber) << ", number of workshops in operation - " << (new_cs.workinshopnumber) << endl;
+    }
 }
 
 
@@ -104,8 +119,6 @@ void edit_pipe(pipe& pipe, bool exists) {
 int main() {
     pipe new_pipe;
     compression_station new_cs;
-    bool pipe_exists = false;
-    bool cs_exists = false;
 
     int k = -1;
     while (true) {
@@ -131,15 +144,16 @@ int main() {
             break;
         case 3:
             cout << "You have chosen: Viewing objects" << endl;
-            view_pipe(new_pipe, pipe_exists);
-            view_compression_station(new_cs, cs_exists);
+            view_pipe(new_pipe);
+            view_cs(new_cs);
             break;
         case 4:
             cout << "You have chosen: Edit the pipe" << endl;
-            edit_pipe(new_pipe, pipe_exists);
+            edit_pipe(new_pipe);
             break;
         case 5:
             cout << "You have chosen: Edit CS" << endl;
+            edit_cs_work(new_cs);
             break;
         case 6:
             cout << "You have chosen: Save data" << endl;
