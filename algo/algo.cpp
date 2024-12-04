@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream> 
 
 using namespace std;
 
@@ -114,7 +115,85 @@ void edit_cs_work(compression_station new_cs) {
     }
 }
 
+void save_pipe(const pipe& p, ofstream& out) {
+    if (!(p.name == "")) {
+        out << "Pipe Information" << endl;
+        out << p.name << endl;
+        out << p.length << endl;
+        out << p.diameter << endl;
+        out << p.repair << endl;
+        cout << "The data about the pipe was successfully saved." << endl;
+    }
+    else {
+        cout << "There is no data about the pipe." << endl;
+    }
+}
 
+void save_cs(const compression_station& cs, ofstream& out) {
+    if (!(cs.name == "")) {
+        out << "Compression Station Information" << endl;
+        out << cs.name << endl;
+        out << cs.shopsnumber << endl;
+        out << cs.workinshopnumber << endl;
+        out << cs.effectiveness << endl;
+        cout << "The data about the compression station was successfully saved." << endl;
+    }
+    else {
+        cout << "There is no data about the compression station." << endl;
+    }
+}
+
+void save_data(const pipe& p, const compression_station& cs) {
+    ofstream out("data.txt");
+    if (out.is_open()) {
+        save_pipe(p, out);
+        save_cs(cs, out);
+    }
+    out.close();
+}
+
+void load_pipe(ifstream& in, pipe& p) {
+    getline(in, p.name);
+    in >> p.length;
+    in >> p.diameter;
+    in >> p.repair;
+    in.ignore();
+}
+
+void load_cs(ifstream& in, compression_station& cs) {
+    getline(in, cs.name);
+    in >> cs.shopsnumber;
+    in >> cs.workinshopnumber;
+    in >> cs.workinshopnumber;
+    in.ignore();
+}
+
+void load_data(pipe& p, compression_station& cs) {
+    ifstream in("data.txt");
+
+    if (in.is_open()) {
+        string temp;
+
+        getline(in, temp);
+        if (temp == "Pipe Information") {
+            load_pipe(in, p);
+            cout << "The pipe data has been uploaded successfully." << endl;
+        }
+        else {
+            cout << "No pipe information found in the file." << endl;
+        }
+
+        getline(in, temp);
+        if (temp == "Compression Station Information") {
+            load_cs(in, cs);
+            cout << "The compression station data has been uploaded successfully." << endl;
+        }
+        else {
+            cout << "No compression station information found in the file." << endl;
+        }
+    }
+    in.close();
+}
 
 int main() {
     pipe new_pipe;
@@ -157,9 +236,11 @@ int main() {
             break;
         case 6:
             cout << "You have chosen: Save data" << endl;
+            save_data(new_pipe, new_cs);
             break;
         case 7:
             cout << "You have chosen: Upload data" << endl;
+            load_data(new_pipe, new_cs);
             break;
         case 0:
             cout << "You have chosen: Exit. Completion of the program." << endl;
