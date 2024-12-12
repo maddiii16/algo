@@ -240,6 +240,17 @@ int main() {
             break;
         case 7:
             cout << "You have chosen: Upload data" << endl;
+
+            new_pipe.name = "";
+            new_pipe.length = 0.0;
+            new_pipe.diameter = 0;
+            new_pipe.repair = 0;
+
+            new_cs.name = "";
+            new_cs.shopsnumber = 0;
+            new_cs.workinshopnumber = 0;
+            new_cs.effectiveness = 0;
+
             load_data(new_pipe, new_cs);
             break;
         case 0:
