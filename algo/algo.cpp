@@ -91,7 +91,7 @@ void view_cs(compression_station new_cs) {
     }
 }
 
-void edit_pipe(pipe new_pipe) {
+void edit_pipe(pipe& new_pipe) {
     if (new_pipe.name == "") {
         cout << "Error! No pipe has been added yet." << endl;
     }
@@ -103,7 +103,7 @@ void edit_pipe(pipe new_pipe) {
     }
 }
 
-void edit_cs_work(compression_station new_cs) {
+void edit_cs_work(compression_station& new_cs) {
     if (new_cs.name == "") {
         cout << "Error! No compression station has been added yet." << endl;
     }
